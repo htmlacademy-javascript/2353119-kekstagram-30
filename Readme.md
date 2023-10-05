@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Егор Река](https://up.htmlacademy.ru/javascript/30/user/2353119).
-* Наставник: `Неизвестно`.
+* Наставник: [Кенан Агаев](https://htmlacademy.ru/profile/kenakula).
 
 ---
 
