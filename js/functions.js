@@ -2,9 +2,9 @@
 const STRING = 'проверяемая строка';
 const STRING_LENGTH = 20;
 
-const checksLength = (string, length) => length >= string.length;
+const getLengthString = (string, length) => length >= string.length;
 
-checksLength(STRING, STRING_LENGTH);
+getLengthString(STRING, STRING_LENGTH);
 
 // палиндромом
 const WORD = 1221;
