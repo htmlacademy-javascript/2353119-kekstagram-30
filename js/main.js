@@ -1,17 +1,5 @@
-const NAMES = [
-  'Александр',
-  'Екатерина',
-  'Михаил',
-  'Анна',
-  'Дмитрий',
-  'Ольга',
-  'Иван',
-  'Мария',
-  'Сергей',
-  'Елена',
-];
-
-const DESCRIPTION = [
+const NAMES = ['Александр', 'Екатерина', 'Михаил', 'Анна', 'Дмитрий', 'Ольга', 'Иван', 'Мария', 'Сергей', 'Елена',];
+const DESCRIPTIONS = [
   'Расцветающее яблочное дерево в саду.',
   'Закат на океане.',
   'Улочки старого города.',
@@ -23,8 +11,7 @@ const DESCRIPTION = [
   'Ночной городской пейзаж с огнями небоскребов',
   'Счастливая семья на пикнике',
 ];
-
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо.Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.В конце концов это просто непрофессионально.',
@@ -33,57 +20,46 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !',
 ];
 
-function getRandomInt(max, min = 1) {
+const getRandomInt = (maxInt, minInt = 1) => (Math.floor(Math.random() * (maxInt - minInt + 1)) + minInt) - 1;
+
+const getUniqueValue = (max, min = 1) => {
+  const minValue = Math.ceil(min);
+  const maxValue = Math.floor(max);
   const previousValues = [];
+  let currentValue = getRandomInt(maxValue, minValue);
 
-  return function () {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    let currentValue = (Math.floor(Math.random() * (max - min + 1)) + min) - 1;
-
-    if (previousValues.length >= (max - min + 1)) {
-      // console.error(`Превышает число запросов. Уникальные числа из диапазона от ${min} до ${max} закончились`);
+  return () => {
+    if (previousValues.length >= (maxValue - minValue + 1)) { // Остановка цикла если уникальные числа из диапазона от ${minInt} до ${maxInt} закончились;
       return null;
     }
 
     while (previousValues.includes(currentValue)) {
-      currentValue = (Math.floor(Math.random() * (max - min + 1)) + min) - 1;
+      currentValue = getRandomInt(maxValue, minValue);
     }
 
     previousValues.push(currentValue);
 
     return currentValue;
   };
-}
-
-const createPostUser = () => {
-  const generatePhotoId = getRandomInt(25); // TODO нужно ли выносить значения аргументов в отдельные переменные?
-  const generateUrl = getRandomInt(25);
-  const generateDescription = getRandomInt(6);
-  const generateLikes = getRandomInt(200, 15);
-  const generateComments = getRandomInt(30);
-  const generateCommentsId = getRandomInt(10); // выносим из функции createComments() для проверки уникальности id.
-
-  const createComments = () => {
-    const generateAvatar = getRandomInt(6);
-    const generateMessage = getRandomInt(6);
-    const generateName = getRandomInt(10);
-
-    return {
-      commentsId: generateCommentsId(),
-      avatar: `img/avatar-${generateAvatar()}.svg`,
-      message: MESSAGE[generateMessage()],
-      name: NAMES[generateName()],
-    };
-  };
-
-  return {
-    id: generatePhotoId(),
-    url: `photos/${generateUrl()}.jpg`,
-    description: DESCRIPTION[generateDescription()],
-    likes: generateLikes(),
-    comments: Array.from({ length: generateComments() }, createComments),
-  };
 };
+
+const generatePhotoId = getUniqueValue(25);
+const generateUrlIndex = getUniqueValue(25);
+const generateCommentsId = getUniqueValue(35);
+
+const createComments = () => ({
+  commentsId: generateCommentsId(),
+  avatar: `img/avatar-${getRandomInt(6)}.svg`,
+  message: MESSAGES[getRandomInt(6)],
+  name: NAMES[getRandomInt(10)],
+});
+
+const createPostUser = () => ({
+  id: generatePhotoId(),
+  url: `photos/${generateUrlIndex()}.jpg`,
+  description: DESCRIPTIONS[getRandomInt(6)],
+  likes: getRandomInt(200, 15),
+  comments: Array.from({ length: getRandomInt(30) }, createComments),
+});
 
 createPostUser();
