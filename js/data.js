@@ -28,8 +28,9 @@ const generateUrlIndex = getUniqueValue(25);
 const createComments = (max, min = 1) => {
   const generateCommentsId = getUniqueValue(5);
   const commentsArray = [];
+  const randomInt = getRandomInt(max, min);
 
-  for (let i = 0; i < getRandomInt(max, min); i++) {
+  for (let i = 0; i < randomInt; i++) {
     commentsArray.push({
       commentsId: generateCommentsId(),
       avatar: `img/avatar-${getRandomInt(6)}.svg`,
