@@ -21,6 +21,7 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !',
 ];
+const COUNT_POST = 11;
 
 const generatePhotoId = getUniqueValue(25);
 const generateUrlIndex = getUniqueValue(25);
@@ -42,7 +43,7 @@ const createComments = (max, min = 1) => {
   return commentsArray;
 };
 
-const createPostUser = () => ({
+const createUserPost = () => ({
   id: generatePhotoId(),
   url: `photos/${generateUrlIndex()}.jpg`,
   description: DESCRIPTIONS[getRandomInt(6)],
@@ -50,4 +51,6 @@ const createPostUser = () => ({
   comments: createComments(30),
 });
 
-export { createPostUser };
+const creatingUserPosts = () => Array.from({ length: COUNT_POST }, createUserPost);
+
+export { creatingUserPosts };
