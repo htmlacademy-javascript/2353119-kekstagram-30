@@ -1,3 +1,2 @@
-import { createPostUser } from './data.js';
+import './renderingThumbnails.js';
 
-createPostUser();
