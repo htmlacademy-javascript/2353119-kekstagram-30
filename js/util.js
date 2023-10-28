@@ -25,4 +25,6 @@ const getUniqueValue = (max, min = 1) => {
   };
 };
 
-export { getRandomInt, getUniqueValue };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomInt, getUniqueValue, isEscapeKey };

@@ -1,4 +1,4 @@
-import { getRandomInt, getUniqueValue } from './util';
+import { getRandomInt, getUniqueValue } from './util.js';
 
 const NAMES = ['Александр', 'Екатерина', 'Михаил', 'Анна', 'Дмитрий', 'Ольга', 'Иван', 'Мария', 'Сергей', 'Елена',];
 const DESCRIPTIONS = [
@@ -21,13 +21,13 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !',
 ];
-const COUNT_POST = 11;
+const COUNT_POST = 25;
 
 const generatePhotoId = getUniqueValue(25);
 const generateUrlIndex = getUniqueValue(25);
 
 const createComments = (max, min = 1) => {
-  const generateCommentsId = getUniqueValue(5);
+  const generateCommentsId = getUniqueValue(50);
   const commentsArray = [];
   const randomInt = getRandomInt(max, min);
 
@@ -51,6 +51,6 @@ const createUserPost = () => ({
   comments: createComments(30),
 });
 
-const creatingUserPosts = () => Array.from({ length: COUNT_POST }, createUserPost);
+const generateUserPosts = () => Array.from({ length: COUNT_POST }, createUserPost);
 
-export { creatingUserPosts };
+export { generateUserPosts };
