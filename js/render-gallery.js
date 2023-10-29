@@ -25,4 +25,4 @@ const renderGallery = () => {
   postsContainerElement.append(postContainerFragment);
 };
 
-export { renderGallery, dataPosts }; //TODO где лучше инициализировать dataPosts?
+export { renderGallery, dataPosts }; //TODO  dataPosts пределать через main

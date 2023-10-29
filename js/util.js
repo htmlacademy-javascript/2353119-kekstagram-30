@@ -1,4 +1,4 @@
-const getRandomInt = (max, min = 1) => {
+const getRandomInt = (max, min = 0) => {
   const intMin = Math.ceil(min);
   const intMax = Math.floor(max);
 
