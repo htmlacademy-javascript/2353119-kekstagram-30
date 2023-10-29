@@ -1,4 +1,4 @@
-const getRandomInt = (max, min = 1) => {
+const getRandomInt = (max, min = 0) => {
   const intMin = Math.ceil(min);
   const intMax = Math.floor(max);
 
@@ -25,4 +25,6 @@ const getUniqueValue = (max, min = 1) => {
   };
 };
 
-export { getRandomInt, getUniqueValue };
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export { getRandomInt, getUniqueValue, isEscapeKey };

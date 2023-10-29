@@ -1,4 +1,4 @@
-import { getRandomInt, getUniqueValue } from './util';
+import { getRandomInt, getUniqueValue } from './util.js';
 
 const NAMES = ['Александр', 'Екатерина', 'Михаил', 'Анна', 'Дмитрий', 'Ольга', 'Иван', 'Мария', 'Сергей', 'Елена',];
 const DESCRIPTIONS = [
@@ -21,22 +21,32 @@ const MESSAGES = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !',
 ];
-const COUNT_POST = 11;
 
-const generatePhotoId = getUniqueValue(25);
-const generateUrlIndex = getUniqueValue(25);
+const NUMBER_POST = 25;
+const MAXIMUM_NUMBER_COMMENTS = 30;
+const MAXIMUM_NUMBER_LIKES = 200;
+const MINIMUM_NUMBER_LIKES = 15;
+const MAXIMUM_INDEX_DESCRIPTIONS = DESCRIPTIONS.length - 1;
+const MAXIMUM_INDEX_NAMES = NAMES.length - 1;
+const MAXIMUM_INDEX_MESSAGES = MESSAGES.length - 1;
+const MAXIMUM_INDEX_AVATAR = 6 + 1;
+const MINIMUM_INDEX_AVATAR = 0 + 1;
+const NUMBER_UNIQUE_ID = 25;
+
+const generatePhotoId = getUniqueValue(NUMBER_UNIQUE_ID);
+const generateUrlId = getUniqueValue(NUMBER_UNIQUE_ID);
 
 const createComments = (max, min = 1) => {
-  const generateCommentsId = getUniqueValue(5);
+  const generateCommentsId = getUniqueValue(NUMBER_UNIQUE_ID);
   const commentsArray = [];
-  const randomInt = getRandomInt(max, min);
+  const randomNumberComments = getRandomInt(max, min);
 
-  for (let i = 0; i < randomInt; i++) {
+  for (let i = 0; i < randomNumberComments; i++) {
     commentsArray.push({
       commentsId: generateCommentsId(),
-      avatar: `img/avatar-${getRandomInt(6)}.svg`,
-      message: MESSAGES[getRandomInt(6)],
-      name: NAMES[getRandomInt(10)],
+      avatar: `img/avatar-${getRandomInt(MINIMUM_INDEX_AVATAR, MAXIMUM_INDEX_AVATAR)}.svg`,
+      message: MESSAGES[getRandomInt(MAXIMUM_INDEX_MESSAGES)],
+      name: NAMES[getRandomInt(MAXIMUM_INDEX_NAMES)],
     });
   }
 
@@ -45,12 +55,12 @@ const createComments = (max, min = 1) => {
 
 const createUserPost = () => ({
   id: generatePhotoId(),
-  url: `photos/${generateUrlIndex()}.jpg`,
-  description: DESCRIPTIONS[getRandomInt(6)],
-  likes: getRandomInt(200, 15),
-  comments: createComments(30),
+  url: `photos/${generateUrlId()}.jpg`,
+  description: DESCRIPTIONS[getRandomInt(MAXIMUM_INDEX_DESCRIPTIONS)],
+  likes: getRandomInt(MAXIMUM_NUMBER_LIKES, MINIMUM_NUMBER_LIKES),
+  comments: createComments(MAXIMUM_NUMBER_COMMENTS),
 });
 
-const creatingUserPosts = () => Array.from({ length: COUNT_POST }, createUserPost);
+const generateUserPosts = () => Array.from({ length: NUMBER_POST }, createUserPost);
 
-export { creatingUserPosts };
+export { generateUserPosts };
