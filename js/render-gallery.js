@@ -3,9 +3,7 @@ import { generateUserPosts } from './data.js';
 const dataPosts = generateUserPosts();
 
 const postsContainerElement = document.querySelector('.pictures');
-const templatePost = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+const templatePost = document.querySelector('#picture').content.querySelector('.picture');
 
 const renderGallery = () => {
   const postContainerFragment = document.createDocumentFragment();

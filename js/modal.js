@@ -1,12 +1,12 @@
 import { loadingModalData, updatesCounterCommentsShown } from './loading-modal-data.js';
 import { isEscapeKey } from './util.js';
 
+const NUMBER_LOAD_COMMENTS = 5;
 const bodyScroll = document.querySelector('body');
 const rootModalElement = document.querySelector('.big-picture');
 const modalOpenElement = document.querySelector('.pictures');
 const modalCloseElement = rootModalElement.querySelector('.big-picture__cancel');
 const commentsLoaderElement = rootModalElement.querySelector('.comments-loader');
-const NUMBER_LOAD_COMMENTS = 5;
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
