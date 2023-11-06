@@ -1,13 +1,12 @@
-import { loadingModalData } from './loading-modal-data.js';
+import { loadingModalData, updatesCounterCommentsShown } from './loading-modal-data.js';
 import { isEscapeKey } from './util.js';
 
+const NUMBER_LOAD_COMMENTS = 5;
 const bodyScroll = document.querySelector('body');
 const rootModalElement = document.querySelector('.big-picture');
 const modalOpenElement = document.querySelector('.pictures');
 const modalCloseElement = rootModalElement.querySelector('.big-picture__cancel');
-
-const commentCount = rootModalElement.querySelector('.social__comment-count'); // temp
-const commentsCountLoader = rootModalElement.querySelector('.comments-loader'); // temp
+const commentsLoaderElement = rootModalElement.querySelector('.comments-loader');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -15,14 +14,29 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const showComments = () => {
+  const hiddenСommentElements = document.querySelectorAll('.social__comment.hidden');
+
+  if (hiddenСommentElements.length >= NUMBER_LOAD_COMMENTS) {
+    for (let i = 0; i <= NUMBER_LOAD_COMMENTS - 1; i++) {
+      hiddenСommentElements[i].classList.remove('hidden');
+    }
+  } else if (hiddenСommentElements.length >= 0) {
+    hiddenСommentElements.forEach((item) => {
+      item.classList.remove('hidden');
+    });
+    commentsLoaderElement.classList.add('hidden');
+  }
+
+  updatesCounterCommentsShown();
+};
+
 const closeModal = () => {
   bodyScroll.classList.remove('modal-open');
   rootModalElement.classList.add('hidden');
   modalCloseElement.removeEventListener('click', closeModal);
   document.removeEventListener('keydown', onDocumentKeydown);
-
-  commentCount.classList.remove('hidden'); // temp
-  commentsCountLoader.classList.remove('hidden'); // temp
+  commentsLoaderElement.removeEventListener('click', showComments);
 };
 
 const openModal = () => {
@@ -30,9 +44,9 @@ const openModal = () => {
   rootModalElement.classList.remove('hidden');
   modalCloseElement.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeydown);
-
-  commentCount.classList.add('hidden'); // temp
-  commentsCountLoader.classList.add('hidden'); // temp
+  updatesCounterCommentsShown();
+  commentsLoaderElement.classList.remove('hidden');
+  commentsLoaderElement.addEventListener('click', showComments);
 };
 
 const initializeModal = () => {

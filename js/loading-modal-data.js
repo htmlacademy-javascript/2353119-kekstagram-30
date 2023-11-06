@@ -1,5 +1,6 @@
 import { dataPosts } from './render-gallery.js';
 
+const START_NUMBER_COMMENTS = 5;
 const rootModalElement = document.querySelector('.big-picture');
 const commentsListElement = rootModalElement.querySelector('.social__comments');
 
@@ -8,14 +9,13 @@ const getListСomments = (target) => {
 
   const commentContainerFragment = document.createDocumentFragment();
   const commentItemElement = commentsListElement.querySelector('.social__comment');
-  const commentShownCount = rootModalElement.querySelector('.social__comment-shown-count');
 
   commentsListElement.innerHTML = '';
 
   dataPosts[indexPost].comments.forEach(({ avatar, message, name }, i) => {
     const cloneCommentTemplate = commentItemElement.cloneNode(true);
 
-    if (i >= 5) {
+    if (i >= START_NUMBER_COMMENTS) { // TODO Техдолг: 1. разбить - добавлять в шаблон по одному элементу 2. Отрисовывем нужное колличество (каждый раз перерисовывая страницу) 3. Добавить счетчик отрисованных
       cloneCommentTemplate.classList.add('hidden');
     }
 
@@ -27,7 +27,15 @@ const getListСomments = (target) => {
   });
 
   commentsListElement.append(commentContainerFragment);
-  commentShownCount.textContent = commentsListElement.querySelectorAll('li:not(.hidden)').length;
+};
+
+const updatesCounterCommentsShown = () => {
+  const commentShownCount = rootModalElement.querySelector('.social__comment-shown-count');
+  const numberAllСomments = rootModalElement.querySelectorAll('.social__comment').length;
+  const numberHiddenComments = rootModalElement.querySelectorAll('.social__comment.hidden').length;
+  const numberVisibleComments = numberAllСomments - numberHiddenComments;
+
+  commentShownCount.textContent = numberVisibleComments;
 };
 
 const loadingModalData = (evt) => {
@@ -40,6 +48,7 @@ const loadingModalData = (evt) => {
 
   if (targetParentСontainer) {
     modalPicture.src = targetParentСontainer.querySelector('.picture__img').src;
+    modalPicture.alt = targetParentСontainer.querySelector('.picture__img').alt;
     modalCaption.textContent = targetParentСontainer.querySelector('.picture__img').alt;
     likesCount.textContent = targetParentСontainer.querySelector('.picture__likes').textContent;
     commentTotalCount.textContent = targetParentСontainer.querySelector('.picture__comments').textContent;
@@ -48,4 +57,4 @@ const loadingModalData = (evt) => {
   }
 };
 
-export { loadingModalData };
+export { loadingModalData, updatesCounterCommentsShown };
