@@ -2,7 +2,7 @@ import { loadingModalData, updatesCounterCommentsShown } from './loading-modal-d
 import { isEscapeKey } from './util.js';
 
 const NUMBER_LOAD_COMMENTS = 5;
-const bodyScroll = document.querySelector('body');
+const bodyElement = document.querySelector('body');
 const rootModalElement = document.querySelector('.big-picture');
 const modalOpenElement = document.querySelector('.pictures');
 const modalCloseElement = rootModalElement.querySelector('.big-picture__cancel');
@@ -10,7 +10,7 @@ const commentsLoaderElement = rootModalElement.querySelector('.comments-loader')
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    closeModal(); // eslint-disable-line
+    modalCloseElement.click();
   }
 };
 
@@ -32,7 +32,7 @@ const showComments = () => {
 };
 
 const closeModal = () => {
-  bodyScroll.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
   rootModalElement.classList.add('hidden');
   modalCloseElement.removeEventListener('click', closeModal);
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -40,7 +40,7 @@ const closeModal = () => {
 };
 
 const openModal = () => {
-  bodyScroll.classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
   rootModalElement.classList.remove('hidden');
   modalCloseElement.addEventListener('click', closeModal);
   document.addEventListener('keydown', onDocumentKeydown);
@@ -51,8 +51,8 @@ const openModal = () => {
 
 const initializeModal = () => {
   modalOpenElement.addEventListener('click', (evt) => {
-    evt.preventDefault();
     if (evt.target.matches('a .picture__img')) {
+      evt.preventDefault();
       loadingModalData(evt);
       openModal();
     }
