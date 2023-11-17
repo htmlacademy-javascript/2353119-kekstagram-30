@@ -69,16 +69,16 @@ const effects = {
 };
 
 const onSettingSlider = (evt) => {
-  const { style: currentStyle, unit: currentUnit, sliderOptions: { min: currentMin, max: currentMax, step: currentStep } } = effects[evt.target.value];
+  const { style, unit, sliderOptions: { min, max, step } } = effects[evt.target.value];
 
   effectLevelSlider.noUiSlider.updateOptions({
-    range: { min: currentMin, max: currentMax },
-    start: currentMax,
-    step: currentStep,
+    range: { min, max },
+    start: max,
+    step,
   });
 
   effectLevelSlider.noUiSlider.on('update', () => {
-    imgPreview.style.filter = `${currentStyle}(${effectLevelSlider.noUiSlider.get()}${currentUnit})`;
+    imgPreview.style.filter = `${style}(${effectLevelSlider.noUiSlider.get()}${unit})`;
     effectLevelValue.value = effectLevelSlider.noUiSlider.get();
   });
 

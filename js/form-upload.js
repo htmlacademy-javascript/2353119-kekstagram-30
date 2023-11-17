@@ -29,7 +29,7 @@ const openUploadEditor = () => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   cancelElement.addEventListener('click', onCancelElementClick);
-  imgUploadForm.addEventListener('submit', onFormSubmit);
+  imgUploadForm.addEventListener('submit', onFormSubmit); // TODO Пределать все обработчики (подключить в main, оставить на скрытых элементах)
   initializeZoom();
   initializeSlider();
 };
