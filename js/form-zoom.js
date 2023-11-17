@@ -7,7 +7,7 @@ const imgUploadPreview = document.querySelector('.img-upload__preview');
 const zoomInElement = document.querySelector('.scale__control--bigger');
 const zoomOutElement = document.querySelector('.scale__control--smaller');
 
-const onZoomClick = () => {
+const onZoomInClick = () => {
   let zoomValue = parseInt(zoomValuesElement.value, 10);
 
   if (zoomValue < MAX_ZOOM_VALUE) {
@@ -28,14 +28,14 @@ const onZoomOutClick = () => {
 };
 
 const initializeZoom = () => {
-  zoomInElement.addEventListener('click', onZoomClick);
+  zoomInElement.addEventListener('click', onZoomInClick);
   zoomOutElement.addEventListener('click', onZoomOutClick);
 };
 
 const resetZoom = () => {
   zoomValuesElement.value = MAX_ZOOM_VALUE;
   imgUploadPreview.style.transform = null;
-  zoomInElement.removeEventListener('click', onZoomClick);
+  zoomInElement.removeEventListener('click', onZoomInClick);
   zoomOutElement.removeEventListener('click', onZoomOutClick);
 };
 
