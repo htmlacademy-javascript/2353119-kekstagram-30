@@ -1,6 +1,10 @@
 const MAX_COUNT_HASHTAG = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 
+const FIRST_CHECK = 3;
+const SECOND_CHECK = 2;
+const THIRD_CHECK = 1;
+
 const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i;
 const erorrHashtagsMessages = {
   INVALID: 'введён невалидный хэш - тег',
@@ -48,7 +52,7 @@ pristine.addValidator(
   fieldHashtags,
   isMaxHashtags,
   erorrHashtagsMessages.EXCEEDED_COUNT,
-  0,
+  FIRST_CHECK,
   false
 );
 
@@ -56,7 +60,7 @@ pristine.addValidator(
   fieldHashtags,
   isValidHashtag,
   erorrHashtagsMessages.INVALID,
-  -1,
+  SECOND_CHECK,
   false
 );
 
@@ -64,7 +68,7 @@ pristine.addValidator(
   fieldHashtags,
   isDuplicatedHashtag,
   erorrHashtagsMessages.DUPLICATED,
-  -2,
+  THIRD_CHECK,
   false
 );
 

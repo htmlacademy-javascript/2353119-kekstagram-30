@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { pristine, isFormValid } from './form-validation.js';
+import { initializeZoom, resetZoom } from './form-zoom.js';
+import { initializeSlider, resetSlider } from './form-slider.js';
 
 const bodyElement = document.body;
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -15,17 +17,21 @@ const cancelUploadEditor = () => {
   pristine.reset();
   overlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
-  cancelElement.removeEventListener('click', onCancelElementClick);
   document.removeEventListener('keydown', onDocumentKeydown);
+  cancelElement.removeEventListener('click', onCancelElementClick);
   imgUploadForm.removeEventListener('submit', onFormSubmit);
+  resetZoom();
+  resetSlider();
 };
 
 const openUploadEditor = () => {
   overlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
-  cancelElement.addEventListener('click', onCancelElementClick);
   document.addEventListener('keydown', onDocumentKeydown);
-  imgUploadForm.addEventListener('submit', onFormSubmit);
+  cancelElement.addEventListener('click', onCancelElementClick);
+  imgUploadForm.addEventListener('submit', onFormSubmit); // TODO Пределать все обработчики (подключить в main, оставить на скрытых элементах)
+  initializeZoom();
+  initializeSlider();
 };
 
 function onDocumentKeydown(evt) {

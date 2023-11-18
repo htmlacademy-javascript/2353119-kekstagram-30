@@ -3,14 +3,14 @@ import { isEscapeKey } from './util.js';
 
 const NUMBER_LOAD_COMMENTS = 5;
 const bodyElement = document.querySelector('body');
-const rootModalElement = document.querySelector('.big-picture');
-const modalOpenElement = document.querySelector('.pictures');
+const rootModalElement = bodyElement.querySelector('.big-picture');
+const modalOpenElement = bodyElement.querySelector('.pictures');
 const modalCloseElement = rootModalElement.querySelector('.big-picture__cancel');
 const commentsLoaderElement = rootModalElement.querySelector('.comments-loader');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    modalCloseElement.click();
+    modalCloseElement.click(); // TODO проверить на тестах
   }
 };
 
