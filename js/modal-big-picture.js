@@ -51,7 +51,6 @@ const renderСomments = () => {
   commentShownCountElement.textContent = shownСommentsСount;
 };
 
-
 const onCommentsLoaderClick = () => {
   renderСomments();
 };
@@ -89,25 +88,26 @@ function onDocumentKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeModalPost();
-    // modalCloseElement.click(); // TODO проверить на тестах
   }
 }
 
+const onModalOpenElementClick = (evt, posts) => {
+  const targetMiniatures = evt.target.closest('[data-index]');
+
+  if (!targetMiniatures) {
+    return;
+  }
+
+  evt.preventDefault();
+
+  const postId = +targetMiniatures.dataset.index;
+  const postData = posts.find(({ id }) => id === postId);
+
+  openModalPost(postData);
+};
+
 const initializeModalBigPicture = (posts) => {
-  modalOpenElement.addEventListener('click', (evt) => {
-    const targetMiniatures = evt.target.closest('[data-index]');
-
-    if (!targetMiniatures) {
-      return;
-    }
-
-    evt.preventDefault();
-
-    const postId = +targetMiniatures.dataset.index;
-    const postData = posts.find(({ id }) => id === postId);
-
-    openModalPost(postData);
-  });
+  modalOpenElement.addEventListener('click', (evt) => onModalOpenElementClick(evt, posts)); // TODO: evt, posts?
 };
 
 modalCloseElement.addEventListener('click', onCloseModalButtonClick);
