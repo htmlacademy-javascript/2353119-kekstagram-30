@@ -6,12 +6,12 @@ const SECOND_CHECK = 2;
 const THIRD_CHECK = 1;
 
 const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i; // TODO: нейминг по критерию?
-const ErorrHashtagsMessages = { // TODO: нейминг по критерию?
+const ErorrHashtagsMessages = {
   INVALID: 'введён невалидный хэш - тег',
   EXCEEDED_COUNT: 'превышено количество хэш - тегов',
   DUPLICATED: 'хэш - теги повторяются',
 };
-const ErorrDescriptionMessages = { // TODO: нейминг по критерию?
+const ErorrDescriptionMessages = {
   LENGTH: 'длина комментария больше 140 символов',
 };
 

@@ -5,14 +5,14 @@ const sliderContainer = imgUploadForm.querySelector('.img-upload__effect-level')
 const effectLevelSliderElement = imgUploadForm.querySelector('.effect-level__slider');
 const effectLevelValueElement = imgUploadForm.querySelector('.effect-level__value');
 
-const defaultSettingSlider = { // TODO: нейминг по критерию?
+const defaultSliderSettings = {
   range: { min: 0, max: 100 },
   start: 100,
   step: 1,
   connect: 'lower',
 };
 
-const effects = { // TODO: нейминг по критерию?
+const effects = {
   none: {
     style: 'none',
     unit: '',
@@ -69,7 +69,7 @@ const effects = { // TODO: нейминг по критерию?
   },
 };
 
-const onSettingSlider = (evt) => {
+const onSiderInit = (evt) => {
   const { style, unit, sliderOptions: { min, max, step } } = effects[evt.target.value];
 
   effectLevelSliderElement.noUiSlider.updateOptions({
@@ -79,7 +79,9 @@ const onSettingSlider = (evt) => {
   });
 
   effectLevelSliderElement.noUiSlider.on('update', () => {
-    imgPreview.style.filter = `${style}(${effectLevelSliderElement.noUiSlider.get()}${unit})`;
+    const sliderLevel = effectLevelSliderElement.noUiSlider.get();
+
+    imgPreview.style.filter = `${style}(${sliderLevel}${unit})`;
     effectLevelValueElement.value = effectLevelSliderElement.noUiSlider.get();
   });
 
@@ -94,13 +96,13 @@ const onSettingSlider = (evt) => {
 
 const initializeSlider = () => {
   sliderContainer.classList.add('hidden');
-  effectsContainer.addEventListener('change', onSettingSlider);
-  noUiSlider.create(effectLevelSliderElement, defaultSettingSlider);
+  effectsContainer.addEventListener('change', onSiderInit);
+  noUiSlider.create(effectLevelSliderElement, defaultSliderSettings);
 };
 
 const resetSlider = () => {
   sliderContainer.classList.add('hidden');
-  effectsContainer.removeEventListener('change', onSettingSlider);
+  effectsContainer.removeEventListener('change', onSiderInit);
   effectLevelSliderElement.noUiSlider.destroy();
   imgPreview.style.filter = null;
 };

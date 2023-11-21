@@ -63,10 +63,13 @@ function onUploadFieldChange() {
 
 const toggleSubmitButton = (isDisabled) => {
   submitButton.disabled = isDisabled;
+
   if (isDisabled) {
     submitButton.textContent = SubmitButtonCaption.SUBMITTING;
+
     return;
   }
+
   submitButton.textContent = SubmitButtonCaption.IDLE;
 };
 
@@ -90,6 +93,7 @@ const onFormSubmit = (evt) => {
     showErrorMessage();
     toggleSubmitButton(false);
   });
+
   pristine.reset();
 };
 

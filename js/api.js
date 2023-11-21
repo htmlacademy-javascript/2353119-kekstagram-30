@@ -10,25 +10,12 @@ const HttpMethod = {
   POST: 'POST',
 };
 
-const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
-  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
-};
-
-const request = (route, errorText, method = HttpMethod.GET, body = null) =>
+const request = (route, method = HttpMethod.GET, body = null) =>
   fetch(`${SERVER_URL}${route}`, { method, body })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error();
-      }
-      return response.json();
-    })
-    .catch(() => {
-      throw new Error(errorText);
-    });
+    .then((response) => response.json());
 
-const getDataFromServer = () => request(ServerRoute.GET_DATA, ErrorText.GET_DATA);
+const getDataFromServer = () => request(ServerRoute.GET_DATA);
 
-const sendDataFromServer = (body) => request(ServerRoute.SEND_DATA, ErrorText.SEND_DATA, HttpMethod.POST, body);
+const sendDataFromServer = (body) => request(ServerRoute.SEND_DATA, HttpMethod.POST, body);
 
 export { getDataFromServer, sendDataFromServer };
