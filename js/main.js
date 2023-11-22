@@ -1,7 +1,13 @@
-import { renderGallery } from './render-gallery.js';
-import { initializeModal } from './modal.js';
+import { getDataFromServer } from './api.js';
+import { renderGalleryMiniatures } from './gallery-miniatures.js';
+import { initializeModalBigPicture } from './modal-big-picture.js';
 import { initializeImgUploadEditor } from './form-upload.js';
+import { showErrorMessage } from './util.js';
 
-renderGallery();
-initializeModal();
-initializeImgUploadEditor();
+getDataFromServer().then((postsData) => {
+
+  renderGalleryMiniatures(postsData);
+  initializeModalBigPicture(postsData);
+  initializeImgUploadEditor();
+
+}).catch(() => showErrorMessage());

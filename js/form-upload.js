@@ -1,7 +1,9 @@
+import { sendDataFromServer } from './api.js';
 import { isEscapeKey } from './util.js';
-import { pristine, isFormValid } from './form-validation.js';
+import { pristine } from './form-validation.js';
 import { initializeZoom, resetZoom } from './form-zoom.js';
 import { initializeSlider, resetSlider } from './form-slider.js';
+import { showSuccessMessage, showErrorMessage } from './form-message-upload.js';
 
 const bodyElement = document.body;
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -10,16 +12,25 @@ const overlayElement = imgUploadForm.querySelector('.img-upload__overlay');
 const cancelElement = imgUploadForm.querySelector('.img-upload__cancel');
 const fieldHashtags = imgUploadForm.querySelector('input[name="hashtags"]');
 const fieldDescription = imgUploadForm.querySelector('textarea[name="description"]');
+const submitButton = imgUploadForm.querySelector('.img-upload__submit');
 
-const isTextField = () => document.activeElement === fieldHashtags || document.activeElement === fieldDescription;
+const SubmitButtonCaption = {
+  SUBMITTING: 'Публикую...',
+  IDLE: 'Опубликовать',
+};
+
+const isTextField = () =>
+  document.activeElement === fieldHashtags ||
+  document.activeElement === fieldDescription;
 
 const cancelUploadEditor = () => {
-  pristine.reset();
   overlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   cancelElement.removeEventListener('click', onCancelElementClick);
-  imgUploadForm.removeEventListener('submit', onFormSubmit);
+
+  pristine.reset();
+  imgUploadForm.reset();
   resetZoom();
   resetSlider();
 };
@@ -29,19 +40,17 @@ const openUploadEditor = () => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   cancelElement.addEventListener('click', onCancelElementClick);
-  imgUploadForm.addEventListener('submit', onFormSubmit); // TODO Пределать все обработчики (подключить в main, оставить на скрытых элементах)
+
   initializeZoom();
   initializeSlider();
 };
 
-function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextField()) {
-    cancelElement.click();
-  }
-}
+const isErrorMessageExists = () => Boolean(document.querySelector('.error'));
 
-function onFormSubmit(evt) {
-  isFormValid(evt);
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt) && !isTextField() && !isErrorMessageExists()) {
+    cancelElement.click(); // TODO: test
+  }
 }
 
 function onCancelElementClick() {
@@ -52,8 +61,46 @@ function onUploadFieldChange() {
   openUploadEditor();
 }
 
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+
+  if (isDisabled) {
+    submitButton.textContent = SubmitButtonCaption.SUBMITTING;
+
+    return;
+  }
+
+  submitButton.textContent = SubmitButtonCaption.IDLE;
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  const isFormValid = pristine.validate();
+
+  if (!isFormValid) {
+    return;
+  }
+
+  const formData = new FormData(evt.target);
+
+  toggleSubmitButton(true);
+  sendDataFromServer(formData).then(() => {
+    cancelUploadEditor();
+    showSuccessMessage();
+    toggleSubmitButton(false);
+  }).catch(() => {
+    showErrorMessage();
+    toggleSubmitButton(false);
+  });
+
+  pristine.reset();
+};
+
 const initializeImgUploadEditor = () => {
   fieldUpload.addEventListener('change', onUploadFieldChange);
 };
+
+imgUploadForm.addEventListener('submit', onFormSubmit);
 
 export { initializeImgUploadEditor };

@@ -5,13 +5,13 @@ const FIRST_CHECK = 3;
 const SECOND_CHECK = 2;
 const THIRD_CHECK = 1;
 
-const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i;
-const erorrHashtagsMessages = {
+const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i; // TODO: нейминг по критерию?
+const ErorrHashtagsMessages = {
   INVALID: 'введён невалидный хэш - тег',
   EXCEEDED_COUNT: 'превышено количество хэш - тегов',
   DUPLICATED: 'хэш - теги повторяются',
 };
-const erorrDescriptionMessages = {
+const ErorrDescriptionMessages = {
   LENGTH: 'длина комментария больше 140 символов',
 };
 
@@ -51,7 +51,7 @@ const isDuplicatedHashtag = (value) => {
 pristine.addValidator(
   fieldHashtags,
   isMaxHashtags,
-  erorrHashtagsMessages.EXCEEDED_COUNT,
+  ErorrHashtagsMessages.EXCEEDED_COUNT,
   FIRST_CHECK,
   false
 );
@@ -59,7 +59,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isValidHashtag,
-  erorrHashtagsMessages.INVALID,
+  ErorrHashtagsMessages.INVALID,
   SECOND_CHECK,
   false
 );
@@ -67,7 +67,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isDuplicatedHashtag,
-  erorrHashtagsMessages.DUPLICATED,
+  ErorrHashtagsMessages.DUPLICATED,
   THIRD_CHECK,
   false
 );
@@ -77,9 +77,7 @@ const isMaxDescriptionLength = (value) => MAX_DESCRIPTION_LENGTH >= value.length
 pristine.addValidator(
   fieldDescription,
   isMaxDescriptionLength,
-  erorrDescriptionMessages.LENGTH
+  ErorrDescriptionMessages.LENGTH
 );
 
-const isFormValid = (evt) => pristine.validate() ? pristine.reset() : evt.preventDefault();
-
-export { pristine, isFormValid };
+export { pristine };

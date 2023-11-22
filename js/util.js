@@ -1,30 +1,19 @@
-const getRandomInt = (max, min = 0) => {
-  const intMin = Math.ceil(min);
-  const intMax = Math.floor(max);
+const REMOVE_MESSAGE_TIMEOUT = 5000;
 
-  return Math.floor(Math.random() * (intMax - intMin + 1)) + intMin;
-};
+const erorrMessageTemplate = document
+  .querySelector('#data-error')
+  .content
+  .querySelector('.data-error');
 
-const getUniqueValue = (max, min = 1) => {
-  const previousValues = [];
+const showErrorMessage = () => {
+  const erorrElement = erorrMessageTemplate.cloneNode(true);
+  document.body.append(erorrElement);
 
-  return () => {
-    let currentValue = getRandomInt(max, min);
-
-    if (previousValues.length >= (max - min + 1)) { // Остановка цикла если уникальные числа из диапазона от min до max закончились;
-      return null;
-    }
-
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInt(max, min);
-    }
-
-    previousValues.push(currentValue);
-
-    return currentValue;
-  };
+  setTimeout(() => {
+    erorrElement.remove();
+  }, REMOVE_MESSAGE_TIMEOUT);
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { getRandomInt, getUniqueValue, isEscapeKey };
+export { isEscapeKey, showErrorMessage };

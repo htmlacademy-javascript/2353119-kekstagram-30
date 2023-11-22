@@ -2,8 +2,8 @@ const MAX_ZOOM_VALUE = 100;
 const MIN_ZOOM_VALUE = 25;
 const ZOOM_STEP = 25;
 
-const zoomValuesElement = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
+const zoomValuesElement = document.querySelector('.scale__control--value');
 const zoomInElement = document.querySelector('.scale__control--bigger');
 const zoomOutElement = document.querySelector('.scale__control--smaller');
 
