@@ -5,9 +5,15 @@ const erorrMessageTemplate = document
   .content
   .querySelector('.data-error');
 
-const showErrorMessage = () => {
+const showErrorMessage = (titleError) => {
   const erorrElement = erorrMessageTemplate.cloneNode(true);
+
+  if (titleError) {
+    erorrElement.querySelector('.data-error__title').textContent = titleError;
+  }
+
   document.body.append(erorrElement);
+
 
   setTimeout(() => {
     erorrElement.remove();

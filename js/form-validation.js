@@ -5,7 +5,9 @@ const FIRST_CHECK = 3;
 const SECOND_CHECK = 2;
 const THIRD_CHECK = 1;
 
-const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i; // TODO: нейминг по критерию?
+const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i; // TODO: нейминг по критерию?
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const ErorrHashtagsMessages = {
   INVALID: 'введён невалидный хэш - тег',
   EXCEEDED_COUNT: 'превышено количество хэш - тегов',
@@ -18,6 +20,12 @@ const ErorrDescriptionMessages = {
 const imgUploadForm = document.querySelector('.img-upload__form');
 const fieldHashtags = imgUploadForm.querySelector('input[name="hashtags"]');
 const fieldDescription = imgUploadForm.querySelector('textarea[name="description"]');
+
+const isValidTypeFile = (file) => {
+  const fileName = file.name.toLowerCase();
+
+  return FILE_TYPES.some((item) => fileName.endsWith(item));
+};
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -33,7 +41,7 @@ const isValidHashtag = (value) => {
   let matchRegex = true;
 
   getArrayHashtags(value).forEach((tag) => {
-    if (!hashtagRegex.test(tag)) {
+    if (!HASHTAG_REGEX.test(tag)) {
       matchRegex = false;
     }
   });
@@ -80,4 +88,4 @@ pristine.addValidator(
   ErorrDescriptionMessages.LENGTH
 );
 
-export { pristine };
+export { pristine, isValidTypeFile };

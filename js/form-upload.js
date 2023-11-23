@@ -1,9 +1,11 @@
 import { sendDataFromServer } from './api.js';
-import { isEscapeKey } from './util.js';
-import { pristine } from './form-validation.js';
+import { isEscapeKey, showErrorMessage } from './util.js';
+import { pristine, isValidTypeFile } from './form-validation.js';
 import { initializeZoom, resetZoom } from './form-zoom.js';
 import { initializeSlider, resetSlider } from './form-slider.js';
-import { showSuccessMessage, showErrorMessage } from './form-message-upload.js';
+import { showSuccessMessageUpload, showErrorMessageUpload } from './form-message-upload.js';
+
+const TITLE_ERROR = 'неверный формат изображения, попробуйте jpg / png';
 
 const bodyElement = document.body;
 const imgUploadForm = document.querySelector('.img-upload__form');
@@ -13,6 +15,8 @@ const cancelElement = imgUploadForm.querySelector('.img-upload__cancel');
 const fieldHashtags = imgUploadForm.querySelector('input[name="hashtags"]');
 const fieldDescription = imgUploadForm.querySelector('textarea[name="description"]');
 const submitButton = imgUploadForm.querySelector('.img-upload__submit');
+const imgPreview = imgUploadForm.querySelector('.img-upload__preview img');
+const imgEffectsPreviews = imgUploadForm.querySelectorAll('.effects__preview');
 
 const SubmitButtonCaption = {
   SUBMITTING: 'Публикую...',
@@ -31,6 +35,7 @@ const cancelUploadEditor = () => {
 
   pristine.reset();
   imgUploadForm.reset();
+  imgPreview.src = ''; // TODO: нужно чистить?
   resetZoom();
   resetSlider();
 };
@@ -45,10 +50,11 @@ const openUploadEditor = () => {
   initializeSlider();
 };
 
-const isErrorMessageExists = () => Boolean(document.querySelector('.error'));
+const isErrorMessageWindow = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextField() && !isErrorMessageExists()) {
+  // ESC && НЕ текстовое поле && НЕ окно сообщениея об ошибке.
+  if (isEscapeKey(evt) && !isTextField() && !isErrorMessageWindow()) {
     cancelElement.click(); // TODO: test
   }
 }
@@ -58,6 +64,20 @@ function onCancelElementClick() {
 }
 
 function onUploadFieldChange() {
+  const file = fieldUpload.files[0];
+
+  if (!isValidTypeFile(file)) {
+    showErrorMessage(TITLE_ERROR); // TODO: пропустят?
+    imgUploadForm.reset();
+
+    return;
+  }
+
+  imgPreview.src = URL.createObjectURL(file);
+  imgEffectsPreviews.forEach((preview) => {
+    preview.style.backgroundImage = `url('${imgPreview.src}')`;
+  });
+
   openUploadEditor();
 }
 
@@ -87,10 +107,10 @@ const onFormSubmit = (evt) => {
   toggleSubmitButton(true);
   sendDataFromServer(formData).then(() => {
     cancelUploadEditor();
-    showSuccessMessage();
+    showSuccessMessageUpload();
     toggleSubmitButton(false);
   }).catch(() => {
-    showErrorMessage();
+    showErrorMessageUpload();
     toggleSubmitButton(false);
   });
 

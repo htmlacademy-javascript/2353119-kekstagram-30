@@ -28,12 +28,12 @@ const showMessage = (element, buttonClass) => {
   element.querySelector(buttonClass).addEventListener('click', onCloseButtonClick);
 };
 
-const showSuccessMessage = () => {
+const showSuccessMessageUpload = () => {
   showMessage(successUploadImgMessageElement, '.success__button');
 };
 
-const showErrorMessage = () => {
+const showErrorMessageUpload = () => {
   showMessage(errorUploadImgMessageElement, '.error__button');
 };
 
-export { showSuccessMessage, showErrorMessage };
+export { showSuccessMessageUpload, showErrorMessageUpload };
