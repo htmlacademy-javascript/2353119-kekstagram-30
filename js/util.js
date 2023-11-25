@@ -12,7 +12,7 @@ const showErrorMessage = (titleError) => {
     erorrElement.querySelector('.data-error__title').textContent = titleError;
   }
 
-  document.body.append(erorrElement); // TODO: нужно добавлять через fragment?
+  document.body.append(erorrElement);
 
 
   setTimeout(() => {

@@ -6,7 +6,6 @@ import { initializeImgUploadEditor } from './form-upload.js';
 import { initializeZoom } from './form-zoom.js';
 import { showErrorMessage } from './util.js';
 
-
 getDataFromServer().then((postsData) => {
   renderGalleryMiniatures(postsData);
   initializeGalleryFilter(postsData);
@@ -15,4 +14,3 @@ getDataFromServer().then((postsData) => {
 
 initializeImgUploadEditor();
 initializeZoom();
-

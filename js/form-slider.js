@@ -69,7 +69,7 @@ const effects = {
   },
 };
 
-const onSiderChange = (evt) => {
+const onSliderChange = (evt) => {
   if (evt.target.value === 'none') {
     sliderContainer.classList.add('hidden');
     imgPreview.removeAttribute('style');
@@ -95,9 +95,8 @@ const onSiderChange = (evt) => {
   sliderContainer.classList.remove('hidden');
 };
 
-// TODO: стоит обернуть в функцию initializeSlider и экспортировать в main?
 noUiSlider.create(effectLevelSliderElement, defaultSliderSettings);
-effectsContainer.addEventListener('change', onSiderChange);
+effectsContainer.addEventListener('change', onSliderChange);
 
 const showSlider = () => {
   sliderContainer.classList.add('hidden');

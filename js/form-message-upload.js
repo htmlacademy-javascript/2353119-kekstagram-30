@@ -32,7 +32,7 @@ function onBobyClick(evt) {
 }
 
 const showMessage = (element, buttonClass) => {
-  document.body.append(element); // TODO: нужно добавлять через fragment?
+  document.body.append(element);
   document.body.addEventListener('click', onBobyClick);
   document.addEventListener('keydown', onDocumentKeydown);
   element.querySelector(buttonClass).addEventListener('click', onCloseButtonClick);
