@@ -27,22 +27,18 @@ const getRandomIndex = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const getArrayUniqueIndexes = (min, max) => {
-  const arrayUniqueIndexes = [];
+const getUniqueIndexesArray = (min, max) => {
+  const uniqueIndexesArray = [];
 
-  if (arrayUniqueIndexes.length >= (max - min + 1)) {
-    return null;
-  }
-
-  while (arrayUniqueIndexes.length < max) {
+  while (uniqueIndexesArray.length < max) {
     const randomIndex = getRandomIndex(min, max);
 
-    if (!arrayUniqueIndexes.includes(randomIndex)) {
-      arrayUniqueIndexes.push(randomIndex);
+    if (!uniqueIndexesArray.includes(randomIndex)) {
+      uniqueIndexesArray.push(randomIndex);
     }
   }
 
-  return arrayUniqueIndexes;
+  return uniqueIndexesArray;
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
@@ -57,4 +53,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export { isEscapeKey, showErrorMessage, getArrayUniqueIndexes, debounce };
+export { isEscapeKey, showErrorMessage, getUniqueIndexesArray, debounce };

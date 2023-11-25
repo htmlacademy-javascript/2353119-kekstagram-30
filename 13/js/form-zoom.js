@@ -2,7 +2,7 @@ const MAX_ZOOM_VALUE = 100;
 const MIN_ZOOM_VALUE = 25;
 const ZOOM_STEP = 25;
 
-const imgUploadPreview = document.querySelector('.img-upload__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const zoomValuesElement = document.querySelector('.scale__control--value');
 const zoomInElement = document.querySelector('.scale__control--bigger');
 const zoomOutElement = document.querySelector('.scale__control--smaller');
@@ -33,10 +33,8 @@ const initializeZoom = () => {
 };
 
 const resetZoom = () => {
-  zoomValuesElement.value = MAX_ZOOM_VALUE;
-  imgUploadPreview.style.transform = null;
-  zoomInElement.removeEventListener('click', onZoomInClick);
-  zoomOutElement.removeEventListener('click', onZoomOutClick);
+  zoomValuesElement.value = `${MAX_ZOOM_VALUE}%`;
+  imgUploadPreview.removeAttribute('style');
 };
 
 export { initializeZoom, resetZoom };
