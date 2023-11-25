@@ -9,6 +9,7 @@ const hideMessage = () => {
     document.querySelector('.error');
   existsElement.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
+  document.body.removeEventListener('click', onBobyClick);
 };
 
 const onCloseButtonClick = () => {
@@ -22,18 +23,27 @@ function onDocumentKeydown(evt) {
   }
 }
 
+function onBobyClick(evt) {
+  if (evt.target.closest('.success__inner') || (evt.target.closest('.error__inner'))) {
+    return;
+  }
+
+  hideMessage();
+}
+
 const showMessage = (element, buttonClass) => {
   document.body.append(element);
+  document.body.addEventListener('click', onBobyClick);
   document.addEventListener('keydown', onDocumentKeydown);
   element.querySelector(buttonClass).addEventListener('click', onCloseButtonClick);
 };
 
-const showSuccessMessage = () => {
+const showUploadSuccessMessage = () => {
   showMessage(successUploadImgMessageElement, '.success__button');
 };
 
-const showErrorMessage = () => {
+const showUploadErrorMessage = () => {
   showMessage(errorUploadImgMessageElement, '.error__button');
 };
 
-export { showSuccessMessage, showErrorMessage };
+export { showUploadSuccessMessage, showUploadErrorMessage };
