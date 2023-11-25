@@ -69,7 +69,14 @@ const effects = {
   },
 };
 
-const onSiderInit = (evt) => {
+const onSiderChange = (evt) => {
+  if (evt.target.value === 'none') {
+    sliderContainer.classList.add('hidden');
+    imgPreview.removeAttribute('style');
+
+    return;
+  }
+
   const { style, unit, sliderOptions: { min, max, step } } = effects[evt.target.value];
 
   effectLevelSliderElement.noUiSlider.updateOptions({
@@ -79,32 +86,26 @@ const onSiderInit = (evt) => {
   });
 
   effectLevelSliderElement.noUiSlider.on('update', () => {
-    const sliderLevel = effectLevelSliderElement.noUiSlider.get();
+    const sliderLevel = +effectLevelSliderElement.noUiSlider.get();
 
     imgPreview.style.filter = `${style}(${sliderLevel}${unit})`;
-    effectLevelValueElement.value = effectLevelSliderElement.noUiSlider.get();
+    effectLevelValueElement.value = +effectLevelSliderElement.noUiSlider.get();
   });
-
-  if (evt.target.value === 'none') {
-    sliderContainer.classList.add('hidden');
-    imgPreview.style.filter = null;
-    return;
-  }
 
   sliderContainer.classList.remove('hidden');
 };
 
-const initializeSlider = () => {
+// TODO: стоит обернуть в функцию initializeSlider и экспортировать в main?
+noUiSlider.create(effectLevelSliderElement, defaultSliderSettings);
+effectsContainer.addEventListener('change', onSiderChange);
+
+const showSlider = () => {
   sliderContainer.classList.add('hidden');
-  effectsContainer.addEventListener('change', onSiderInit);
-  noUiSlider.create(effectLevelSliderElement, defaultSliderSettings);
 };
 
-const resetSlider = () => {
+const hideSlider = () => {
   sliderContainer.classList.add('hidden');
-  effectsContainer.removeEventListener('change', onSiderInit);
-  effectLevelSliderElement.noUiSlider.destroy();
-  imgPreview.style.filter = null;
+  imgPreview.removeAttribute('style');
 };
 
-export { initializeSlider, resetSlider };
+export { showSlider, hideSlider };

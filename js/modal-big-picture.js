@@ -4,20 +4,20 @@ const STEP_COMMENTS_SHOWN = 5;
 
 const bodyElement = document.querySelector('body');
 const bigPictureContainer = document.querySelector('.big-picture');
-const modalCloseElement = bigPictureContainer.querySelector('.big-picture__cancel');
 const modalOpenElement = document.querySelector('.pictures');
+const modalCloseElement = bigPictureContainer.querySelector('.big-picture__cancel');
 
 const commentsListElement = bigPictureContainer.querySelector('.social__comments');
 const commentShownCountElement = bigPictureContainer.querySelector('.social__comment-shown-count');
 const commentTotalCountElement = bigPictureContainer.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureContainer.querySelector('.comments-loader');
-const commentElement = document.querySelector('#comment').content.querySelector('.social__comment');
+const commentTemplateElement = document.querySelector('#comment').content.querySelector('.social__comment');
 
 let shownСommentsСount = 0;
 let comments = [];
 
 const createComment = ({ avatar, message, name }) => {
-  const newComment = commentElement.cloneNode(true);
+  const newComment = commentTemplateElement.cloneNode(true);
 
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__picture').alt = name;
@@ -107,7 +107,7 @@ const onModalOpenElementClick = (evt, posts) => {
 };
 
 const initializeModalBigPicture = (posts) => {
-  modalOpenElement.addEventListener('click', (evt) => onModalOpenElementClick(evt, posts)); // TODO: evt, posts?
+  modalOpenElement.addEventListener('click', (evt) => onModalOpenElementClick(evt, posts));
 };
 
 modalCloseElement.addEventListener('click', onCloseModalButtonClick);
