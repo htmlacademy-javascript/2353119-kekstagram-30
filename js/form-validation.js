@@ -11,14 +11,14 @@ const FIFTH_CHECK = 0;
 
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 
-const ErorrHashtagsMessages = {
+const ErrorHashtagsMessages = {
   INVALID: 'введён невалидный хэш - тег',
   EXCEEDED_COUNT: 'превышено количество хэш - тегов',
   DUPLICATED: 'хэш - теги повторяются',
   MAX_LENGTH_CHARACTERS: 'Максимальная длина 20 символов',
   MIN_LENGTH_CHARACTERS: 'Минимальная длина 2 символа',
 };
-const ErorrDescriptionMessages = {
+const ErrorDescriptionMessages = {
   LENGTH: 'длина комментария больше 140 символов',
 };
 
@@ -64,7 +64,7 @@ const isMaxDescriptionLength = (value) => value.length < MAX_DESCRIPTION_LENGTH;
 pristine.addValidator(
   fieldHashtags,
   isMaxCountHashtags,
-  ErorrHashtagsMessages.EXCEEDED_COUNT,
+  ErrorHashtagsMessages.EXCEEDED_COUNT,
   FIRST_CHECK,
   true
 );
@@ -72,7 +72,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isMinCharactersHashtags,
-  ErorrHashtagsMessages.MIN_LENGTH_CHARACTERS,
+  ErrorHashtagsMessages.MIN_LENGTH_CHARACTERS,
   SECOND_CHECK,
   true
 );
@@ -80,7 +80,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isMaxCharactersHashtags,
-  ErorrHashtagsMessages.MAX_LENGTH_CHARACTERS,
+  ErrorHashtagsMessages.MAX_LENGTH_CHARACTERS,
   THIRD_CHECK,
   true
 );
@@ -88,7 +88,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isValidHashtag,
-  ErorrHashtagsMessages.INVALID,
+  ErrorHashtagsMessages.INVALID,
   FOURTH_CHECK,
   true
 );
@@ -96,7 +96,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldHashtags,
   isDuplicatedHashtag,
-  ErorrHashtagsMessages.DUPLICATED,
+  ErrorHashtagsMessages.DUPLICATED,
   FIFTH_CHECK,
   true
 );
@@ -104,7 +104,7 @@ pristine.addValidator(
 pristine.addValidator(
   fieldDescription,
   isMaxDescriptionLength,
-  ErorrDescriptionMessages.LENGTH
+  ErrorDescriptionMessages.LENGTH
 );
 
 export { pristine };

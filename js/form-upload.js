@@ -5,9 +5,9 @@ import { resetZoom } from './form-zoom.js';
 import { showSlider, hideSlider } from './form-slider.js';
 import { showUploadSuccessMessage, showUploadErrorMessage } from './form-message-upload.js';
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const FILES_TYPES = ['jpg', 'jpeg', 'png'];
 
-const MessageErorr = {
+const MessageError = {
   TYPE_FILE: 'неверный формат изображения, попробуйте jpg / png',
 };
 const SubmitButtonCaption = {
@@ -33,7 +33,7 @@ const isTextField = () =>
 const isValidTypeFile = (file) => {
   const fileName = file.name.toLowerCase();
 
-  return FILE_TYPES.some((item) => fileName.endsWith(item));
+  return FILES_TYPES.some((item) => fileName.endsWith(item));
 };
 
 const cancelUploadEditor = () => {
@@ -60,9 +60,9 @@ const openUploadEditor = () => {
 const isErrorMessageWindow = () => Boolean(document.querySelector('.error'));
 
 function onDocumentKeydown(evt) {
-  const isСonditionСlosing = isEscapeKey(evt) && !isTextField() && !isErrorMessageWindow();
+  const isConditionClosing = isEscapeKey(evt) && !isTextField() && !isErrorMessageWindow();
 
-  if (isСonditionСlosing) {
+  if (isConditionClosing) {
     evt.preventDefault();
     cancelUploadEditor();
   }
@@ -76,7 +76,7 @@ function onUploadFieldChange() {
   const file = fieldUpload.files[0];
 
   if (!isValidTypeFile(file)) {
-    showErrorMessage(MessageErorr.TYPE_FILE);
+    showErrorMessage(MessageError.TYPE_FILE);
     imgUploadFormContainer.reset();
 
     return;

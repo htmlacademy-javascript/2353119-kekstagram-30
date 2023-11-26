@@ -1,22 +1,22 @@
 const REMOVE_MESSAGE_TIMEOUT = 5000;
 
-const erorrMessageTemplate = document
+const errorMessageTemplate = document
   .querySelector('#data-error')
   .content
   .querySelector('.data-error');
 
 const showErrorMessage = (titleError) => {
-  const erorrElement = erorrMessageTemplate.cloneNode(true);
+  const errorElement = errorMessageTemplate.cloneNode(true);
 
   if (titleError) {
-    erorrElement.querySelector('.data-error__title').textContent = titleError;
+    errorElement.querySelector('.data-error__title').textContent = titleError;
   }
 
-  document.body.append(erorrElement);
+  document.body.append(errorElement);
 
 
   setTimeout(() => {
-    erorrElement.remove();
+    errorElement.remove();
   }, REMOVE_MESSAGE_TIMEOUT);
 };
 
@@ -28,17 +28,17 @@ const getRandomIndex = (min, max) => {
 };
 
 const getUniqueIndexesArray = (min, max) => {
-  const uniqueIndexesArray = [];
+  const uniqueIndexes = [];
 
-  while (uniqueIndexesArray.length < max) {
+  while (uniqueIndexes.length < max) {
     const randomIndex = getRandomIndex(min, max);
 
-    if (!uniqueIndexesArray.includes(randomIndex)) {
-      uniqueIndexesArray.push(randomIndex);
+    if (!uniqueIndexes.includes(randomIndex)) {
+      uniqueIndexes.push(randomIndex);
     }
   }
 
-  return uniqueIndexesArray;
+  return uniqueIndexes;
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';

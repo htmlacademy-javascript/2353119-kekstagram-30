@@ -1,6 +1,7 @@
 const MAX_ZOOM_VALUE = 100;
 const MIN_ZOOM_VALUE = 25;
 const ZOOM_STEP = 25;
+const PERCENTAGE_DIVIDER = 100;
 
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const zoomValuesElement = document.querySelector('.scale__control--value');
@@ -14,7 +15,7 @@ const onZoomInClick = () => {
     zoomValue += ZOOM_STEP;
   }
   zoomValuesElement.value = `${zoomValue}%`;
-  imgUploadPreview.style.transform = `scale(${zoomValue / 100})`;
+  imgUploadPreview.style.transform = `scale(${zoomValue / PERCENTAGE_DIVIDER})`;
 };
 
 const onZoomOutClick = () => {
@@ -24,7 +25,7 @@ const onZoomOutClick = () => {
     zoomValue -= ZOOM_STEP;
   }
   zoomValuesElement.value = `${zoomValue}%`;
-  imgUploadPreview.style.transform = `scale(${zoomValue / 100})`;
+  imgUploadPreview.style.transform = `scale(${zoomValue / PERCENTAGE_DIVIDER})`;
 };
 
 const initializeZoom = () => {
