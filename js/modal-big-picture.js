@@ -92,15 +92,15 @@ function onDocumentKeydown(evt) {
 }
 
 const onModalOpenElementClick = (evt, posts) => {
-  const targetMiniatures = evt.target.closest('[data-index]');
+  const targetMiniature = evt.target.closest('[data-index]');
 
-  if (!targetMiniatures) {
+  if (!targetMiniature) {
     return;
   }
 
   evt.preventDefault();
 
-  const postId = +targetMiniatures.dataset.index;
+  const postId = +targetMiniature.dataset.index;
   const postData = posts.find(({ id }) => id === postId);
 
   openModalPost(postData);
