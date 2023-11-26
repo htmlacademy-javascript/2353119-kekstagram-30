@@ -13,7 +13,7 @@ const commentTotalCountElement = bigPictureContainer.querySelector('.social__com
 const commentsLoaderElement = bigPictureContainer.querySelector('.comments-loader');
 const commentTemplateElement = document.querySelector('#comment').content.querySelector('.social__comment');
 
-let shownСommentsСount = 0;
+let shownCommentsCount = 0;
 let comments = [];
 
 const createComment = ({ avatar, message, name }) => {
@@ -26,12 +26,12 @@ const createComment = ({ avatar, message, name }) => {
   return newComment;
 };
 
-const renderСomments = () => {
+const renderComments = () => {
   const totalCommentsCount = comments.length;
-  shownСommentsСount += STEP_COMMENTS_SHOWN;
+  shownCommentsCount += STEP_COMMENTS_SHOWN;
 
-  if (shownСommentsСount >= totalCommentsCount) {
-    shownСommentsСount = totalCommentsCount;
+  if (shownCommentsCount >= totalCommentsCount) {
+    shownCommentsCount = totalCommentsCount;
     commentsLoaderElement.classList.add('hidden');
   } else {
     commentsLoaderElement.classList.remove('hidden');
@@ -39,7 +39,7 @@ const renderСomments = () => {
 
   const fragment = document.createDocumentFragment();
 
-  for (let i = 0; shownСommentsСount > i; i++) {
+  for (let i = 0; shownCommentsCount > i; i++) {
     const comment = createComment(comments[i]);
     fragment.append(comment);
   }
@@ -48,11 +48,11 @@ const renderСomments = () => {
   commentsListElement.append(fragment);
 
   commentTotalCountElement.textContent = comments.length;
-  commentShownCountElement.textContent = shownСommentsСount;
+  commentShownCountElement.textContent = shownCommentsCount;
 };
 
 const onCommentsLoaderClick = () => {
-  renderСomments();
+  renderComments();
 };
 
 const renderModalPost = ({ url, description, likes }) => {
@@ -63,7 +63,7 @@ const renderModalPost = ({ url, description, likes }) => {
 };
 
 const closeModalPost = () => {
-  shownСommentsСount = 0;
+  shownCommentsCount = 0;
   bigPictureContainer.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -80,7 +80,7 @@ const openModalPost = (postData) => {
 
   comments = postData.comments;
 
-  renderСomments();
+  renderComments();
   renderModalPost(postData);
 };
 
